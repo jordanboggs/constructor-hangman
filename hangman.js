@@ -14,3 +14,11 @@ const Letter = require("./Letter.js");
 const wordBank = ["armadillo", "capybara", "platypus", "hippopotamus",
                   "rhinoceros", "wallaby", "elephant", "dromedary",
                   "llama", "alpaca", "gazelle", "antilope", "anteater"];
+let guesses = 9;
+
+const pickWord = function() {
+  const randomWord = Math.floor(Math.random() * wordBank.length);
+  const newWord = new Word(randomWord);
+  return newWord;
+};
+
