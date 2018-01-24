@@ -1,0 +1,16 @@
+/* * * * * * * * * * * * * * * * * * * * * * *
+ * CONSTRUCTOR HANGMAN                       *
+ * By Jordan Boggs                           *
+ * January, 2018                             *
+ * Submitted for credit for                  *
+ *  University of Denver Coding Bootcamp     *
+ * * * * * * * * * * * * * * * * * * * * * * *
+ */
+
+const prompt = require(prompt);
+const Word = require("./Word.js");
+const Letter = require("./Letter.js");
+
+const wordBank = ["armadillo", "capybara", "platypus", "hippopotamus",
+                  "rhinoceros", "wallaby", "elephant", "dromedary",
+                  "llama", "alpaca", "gazelle", "antilope", "anteater"];
