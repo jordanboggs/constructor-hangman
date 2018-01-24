@@ -1,0 +1,22 @@
+{
+  "name": "constructor-hangman",
+  "version": "1.0.0",
+  "description": "CLI Hangman",
+  "main": "hangman.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/preaksneview/constructor-hangman.git"
+  },
+  "author": "Jordan Boggs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/preaksneview/constructor-hangman/issues"
+  },
+  "homepage": "https://github.com/preaksneview/constructor-hangman#readme",
+  "dependencies": {
+    "prompt": "^1.0.0"
+  }
+}
