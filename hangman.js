@@ -7,7 +7,7 @@
  * * * * * * * * * * * * * * * * * * * * * * *
  */
 
-const prompt = require(prompt);
+const prompt = require('prompt');
 const Word = require("./Word.js");
 const Letter = require("./Letter.js");
 
