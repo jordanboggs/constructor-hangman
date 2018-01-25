@@ -8,7 +8,7 @@
  */
 
 const prompt = require('prompt');
-const color = require("color/safe");
+const colors = require("colors/safe");
 const Word = require("./Word.js");
 const Letter = require("./Letter.js");
 
@@ -25,5 +25,15 @@ const pickWord = function() {
 
 let newWord = pickWord();
 
-prompt.start();
+let schema = {
+  properties: {
+    letter: {
+      description: "Guess a letter"
+    }
+  }
+};
 
+prompt.start();
+prompt.get('letter', function(err, result){
+  console.log(result);
+});
