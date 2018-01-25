@@ -8,6 +8,7 @@
  */
 
 const prompt = require('prompt');
+const color = require("color/safe");
 const Word = require("./Word.js");
 const Letter = require("./Letter.js");
 
@@ -24,4 +25,5 @@ const pickWord = function() {
 
 let newWord = pickWord();
 
-console.log(newWord.array);
+prompt.start();
+
