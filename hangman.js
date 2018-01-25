@@ -17,8 +17,10 @@ const wordBank = ["armadillo", "capybara", "platypus", "hippopotamus",
 let guesses = 9;
 
 const pickWord = function() {
-  const randomWord = Math.floor(Math.random() * wordBank.length);
+  const randomWord = wordBank[Math.floor(Math.random() * wordBank.length)];
   const newWord = new Word(randomWord);
   return newWord;
 };
 
+let newWord = pickWord();
+console.log(newWord);
