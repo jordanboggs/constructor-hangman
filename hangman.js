@@ -23,4 +23,5 @@ const pickWord = function() {
 };
 
 let newWord = pickWord();
-console.log(newWord);
+
+console.log(newWord.array);
