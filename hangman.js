@@ -28,12 +28,15 @@ let newWord = pickWord();
 let schema = {
   properties: {
     letter: {
-      description: "Guess a letter"
+      description: colors.magenta("Guess a letter")
     }
   }
 };
 
+prompt.message = colors.red("?");
+prompt.delimiter = " ";
+
 prompt.start();
-prompt.get('letter', function(err, result){
-  console.log(result);
+prompt.get(schema, function(err, result){
+  console.log(colors.cyan(result.letter));
 });
