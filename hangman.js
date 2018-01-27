@@ -7,10 +7,11 @@
  * * * * * * * * * * * * * * * * * * * * * * *
  */
 
-const prompt = require('prompt');
-const colors = require("colors/safe");
 const Word = require("./Word.js");
 const Letter = require("./Letter.js");
+const prompt = require("prompt");
+const colors = require("colors/safe");
+const _ = require("lodash");
 
 const wordBank = ["armadillo", "capybara", "platypus", "hippopotamus",
                   "rhinoceros", "wallaby", "elephant", "dromedary",
@@ -27,53 +28,91 @@ let newWord = pickWord();
 let guessedArray = newWord.arrayOfChars;
 let blanksArray = newWord.arrayOfBlanks;
 
-// DELETE later, this is for testing only
-console.log(colors.blue("The word is " + newWord.word));
-console.log(blanksArray);
-console.log(colors.grey(blanksArray.join(" ")));
+const interface = function() {
+  // DELETE later, this is for testing only
+  console.log(colors.bgWhite.black("The word is " + newWord.word));
+  console.log(colors.white(blanksArray.join(" ") + "\n"));
 
-// Set up the prompt
-let schema = {
-  properties: {
-    letter: {
-      description: colors.magenta("Guess a letter:")
-    }
-  }
-};
-// Set up colors
-prompt.message = colors.cyan("?");
-prompt.delimiter = " ";
-// Begin prompt
-prompt.start();
-prompt.get(schema, function(err, result){
-  // console.log(colors.cyan(result.letter));
-  if (err) {
-    console.log(colors.red(err));
-  }
-  else {
-    // Program will reject all letters after initial letter
-    let letter = result.letter[0];
-
-    // Program will detect if the guess was wrong
-    let success = 0;
-
-    // Check array for matches
-    for (let i = 0; i < guessedArray.length; i++) {
-      if (letter === guessedArray[i]) {
-        // Replace the space in blanksArray
-        blanksArray[i] = letter;
-        success++;
+  // Set up the prompt
+  let schema = {
+    properties: {
+      letter: {
+        description: colors.yellow("Guess a letter:")
       }
     }
-
-    // Check if right or wrong
-    if (success === 0) {
-      guesses--;
-      console.log(colors.red("Incorrect!"));
-      console.log("Guesses left: " + guesses);
+  };
+  // Set up colors
+  prompt.message = colors.cyan("?");
+  prompt.delimiter = " ";
+  // Begin prompt
+  prompt.start();
+  prompt.get(schema, function(err, result){
+    // console.log(colors.cyan(result.letter));
+    if (err) {
+      console.log(colors.red(err));
     }
     else {
-      console.log(colors.green(blanksArray.join(" ")));
+      // Program will reject all letters after initial letter
+      let letter = result.letter[0];
+
+      // Program will detect if the guess was wrong
+      let correctGuess = false;
+
+      // Check array for matches
+      for (let i = 0; i < guessedArray.length; i++) {
+        if (letter === guessedArray[i]) {
+          // Replace the space in blanksArray
+          blanksArray[i] = letter;
+          correctGuess = true;
+        }
+      }
+
+      // Check if right or wrong
+      if (!correctGuess) {
+        guesses--;
+        console.log(colors.red("Incorrect!"));
+        console.log(colors.cyan("Guesses left: " + guesses));
+        interface();
+      }
+      else {
+        console.log(colors.white(blanksArray.join(" ")));
+
+        // Log the two arrays
+        // console.log("blanksArray:",blanksArray);
+        // console.log("guessedArray:",guessedArray);
+
+        // Check for victory
+        if (_.isEqual(blanksArray, guessedArray)) {
+          console.log("blanksArray == guessedArray");
+          let newSchema = {
+            properties: {
+              continue: {
+                type: 'boolean',
+                description: colors.yellow("Continue? (true/false)")
+              }
+            }
+          }
+          prompt.start();
+          prompt.get(newSchema, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            if (result.continue) {
+              _.pull(wordBank, newWord.name);
+              newWord = pickWord();
+              guessedArray = newWord.arrayOfChars;
+              blanksArray = newWord.arrayOfBlanks;
+              interface();
+            }
+          });
+        }
+        else {
+          console.log("blanksArray != guessedArray for some reason");
+          interface();
+        }
+      }
     }
-  }
-});
+  });
+}
+
+interface();
