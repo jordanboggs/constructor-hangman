@@ -16,7 +16,8 @@ const _ = require("lodash");
 const wordBank = ["armadillo", "capybara", "platypus", "hippopotamus",
                   "rhinoceros", "wallaby", "elephant", "dromedary",
                   "llama", "alpaca", "gazelle", "antilope", "anteater"];
-let guesses = 9;
+let maxGuesses = 9;
+let guesses = maxGuesses;
 
 const pickWord = function() {
   const randomWord = wordBank[Math.floor(Math.random() * wordBank.length)];
@@ -25,12 +26,15 @@ const pickWord = function() {
 };
 
 let newWord = pickWord();
+// Remove the word from the wordbank
+_.pull(wordBank, newWord.word);
 let guessedArray = newWord.arrayOfChars;
 let blanksArray = newWord.arrayOfBlanks;
 
 const interface = function() {
   // DELETE later, this is for testing only
-  console.log(colors.bgWhite.black("The word is " + newWord.word));
+  // console.log(colors.bgWhite.black("The word is " + newWord.word));
+  // console.log(colors.bgWhite.black("Word bank:",wordBank));
   console.log(colors.white(blanksArray.join(" ") + "\n"));
 
   // Set up the prompt
@@ -83,31 +87,43 @@ const interface = function() {
 
         // Check for victory
         if (_.isEqual(blanksArray, guessedArray)) {
-          console.log("blanksArray == guessedArray");
-          let newSchema = {
-            properties: {
-              continue: {
-                type: 'boolean',
-                description: colors.yellow("Continue? (true/false)")
+          // Check if there are any new words left
+          if (wordBank.length > 0) {
+            // Prompt to start a new game
+            let newSchema = {
+              properties: {
+                continue: {
+                  type: 'boolean',
+                  description: colors.yellow("Continue? (true/false)")
+                }
               }
             }
+            prompt.start();
+            prompt.get(newSchema, function(err, result) {
+              if (err) {
+                throw err;
+              }
+              if (result.continue) {  
+                // Pick a new word
+                newWord = pickWord();
+
+                // Remove the word from the wordbank
+                _.pull(wordBank, newWord.word);
+
+                // reset
+                guessedArray = newWord.arrayOfChars;
+                blanksArray = newWord.arrayOfBlanks;
+                guesses = maxGuesses;
+                interface();
+              }
+            });
           }
-          prompt.start();
-          prompt.get(newSchema, function(err, result) {
-            if (err) {
-              throw err;
-            }
-            if (result.continue) {
-              _.pull(wordBank, newWord.name);
-              newWord = pickWord();
-              guessedArray = newWord.arrayOfChars;
-              blanksArray = newWord.arrayOfBlanks;
-              interface();
-            }
-          });
+          else {
+            console.log(colors.rainbow("Congratulations!! You win!!!"));
+          }
         }
         else {
-          console.log("blanksArray != guessedArray for some reason");
+          // console.log("blanksArray != guessedArray for some reason");
           interface();
         }
       }
