@@ -32,9 +32,6 @@ let guessedArray = newWord.arrayOfChars;
 let blanksArray = newWord.arrayOfBlanks;
 
 const interface = function() {
-  // DELETE later, this is for testing only
-  // console.log(colors.bgWhite.black("The word is " + newWord.word));
-  // console.log(colors.bgWhite.black("Word bank:",wordBank));
   console.log(colors.white(blanksArray.join(" ") + "\n"));
 
   // Set up the prompt
@@ -51,7 +48,6 @@ const interface = function() {
   // Begin prompt
   prompt.start();
   prompt.get(schema, function(err, result){
-    // console.log(colors.cyan(result.letter));
     if (err) {
       console.log(colors.red(err));
     }
@@ -80,10 +76,6 @@ const interface = function() {
       }
       else {
         console.log(colors.white(blanksArray.join(" ")));
-
-        // Log the two arrays
-        // console.log("blanksArray:",blanksArray);
-        // console.log("guessedArray:",guessedArray);
 
         // Check for victory
         if (_.isEqual(blanksArray, guessedArray)) {
@@ -123,7 +115,6 @@ const interface = function() {
           }
         }
         else {
-          // console.log("blanksArray != guessedArray for some reason");
           interface();
         }
       }
