@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/preaksneview/constructor-hangman#readme",
   "dependencies": {
+    "colors": "^1.1.2",
+    "lodash": "^4.17.4",
     "prompt": "^1.0.0"
   }
 }
