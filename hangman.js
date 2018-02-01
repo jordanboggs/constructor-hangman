@@ -66,7 +66,7 @@ const interface = function() {
           correctGuess = true;
         }
       }
-
+      
       // Check if right or wrong
       if (!correctGuess) {
         guesses--;
@@ -81,12 +81,11 @@ const interface = function() {
         }
       }
       else {
-        console.log(colors.white(blanksArray.join(" ")));
-
         // Check for victory
         if (_.isEqual(blanksArray, guessedArray)) {
           // Check if there are any new words left
           if (wordBank.length > 0) {
+            console.log(colors.white(blanksArray.join(" ")));
             // Prompt to start a new game
             let newSchema = {
               properties: {
