@@ -70,9 +70,15 @@ const interface = function() {
       // Check if right or wrong
       if (!correctGuess) {
         guesses--;
-        console.log(colors.red("Incorrect!"));
-        console.log(colors.cyan("Guesses left: " + guesses));
-        interface();
+        if (guesses > 0) {
+          console.log(colors.red("Incorrect!"));
+          console.log(colors.cyan("Guesses left: " + guesses));
+          interface(); 
+        }
+        else {
+          console.log(colors.red("You lose :("));
+          return;
+        }
       }
       else {
         console.log(colors.white(blanksArray.join(" ")));
