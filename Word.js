@@ -7,6 +7,8 @@ const Word = function(word) {
   this.arrayOfBlanks = this.makeArrayOfBlanks(this.array);
 };
 
+// I don't believe I ever ended up using this.array, so think about
+// removing this in the future
 Word.prototype.objectifyLetters = function(word) {
   let arr = word.split("");
   arr.forEach(function(letter, index) {
